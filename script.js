@@ -211,7 +211,6 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imgTargets.forEach(img => imgObserver.observe(img));
 
 // Slider
-
 let curSlide = 0;
 const maxSlide = slides.length - 1;
 
@@ -403,7 +402,7 @@ document.querySelector('.nav').addEventListener(
 
 ///////////////////////
 // Traversing the DOM
-/* */
+/*
 const h1 = document.querySelector('h1');
 
 // Going downwards: child
@@ -441,3 +440,4 @@ window.addEventListener('load', function (e) {
 //   console.log('Are you sure you want to leave?');
 //   e.returnValue = '';
 // });
+*/
