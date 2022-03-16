@@ -341,13 +341,13 @@
         in just <span class="highlight">5 minutes</span>
       </h2>
       <form class="modal__form">
-        <label>First Name</label>
-        <input type="text" />
-        <label>Last Name</label>
-        <input type="text" />
-        <label>Email Address</label>
-        <input type="email" />
-        <button class="btn">Next step &rarr;</button>
+        <label for="first-name">First Name</label>
+        <input type="text" name="first-name" id="first-name" />
+        <label for="last-name">Last Name</label>
+        <input type="text" name="last-name" id="last-name" />
+        <label for="pin">PIN</label>
+        <input type="number" name="pin" id="pin" placeholder="XXXX" />
+        <button class="btn btn--sign-up" type="submit">Next step &rarr;</button>
       </form>
     </div>
     <div class="overlay hidden"></div>

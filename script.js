@@ -1,11 +1,16 @@
 'use strict';
 
+/******************************************
+ * Section 14
+ */
+
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const btnSignUp = document.querySelector('.btn--sign-up');
 
 const nav = document.querySelector('.nav');
 
@@ -20,6 +25,11 @@ const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
 const dotContainer = document.querySelector('.dots');
+
+const formSignUp = document.querySelector('.modal__form');
+const inputFirstName = formSignUp.querySelector('#first-name');
+const inputLastName = formSignUp.querySelector('#last-name');
+const inputPIN = formSignUp.querySelector('#pin');
 
 ///////////////////////////////////////
 // Modal window
@@ -50,11 +60,9 @@ document.addEventListener('keydown', function (e) {
 // Scrolling
 
 btnScrollTo.addEventListener('click', function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  // console.log(s1coords);
+  // const s1coords = section1.getBoundingClientRect();
   // console.log(e.target.getBoundingClientRect());
 
-  // Scrolling
   // window.scrollTo(
   //   s1coords.left + window.scrollX,
   //   s1coords.top + window.scrollY
@@ -80,12 +88,12 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   // Matching strategy
   if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href');
+    if (id === '#') return;
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
 
 // Tabbed component
-
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
 
@@ -275,169 +283,30 @@ dotContainer.addEventListener('click', function (e) {
   }
 });
 
-/////////////////////////////////////////
-// Lectures
-/*
+//////////////////////////
+// Sign up button
 
-// Selecting elements
-console.log(document.documentElement);
-console.log(document.body);
+formSignUp.addEventListener('submit', function (e) {
+  // Prevent page reload
+  e.preventDefault();
 
-const header = document.querySelector('.header');
-document.querySelectorAll('.section');
-document.getElementById('section--h');
-document.getElementsByTagName('button');
-document.getElementsByClassName('btn');
+  // Pull user data into variables
+  const firstName = inputFirstName.value;
+  const lastName = inputLastName.value;
+  const pin = inputPIN.value;
+  inputFirstName.value = inputLastName.value = inputPIN.value = '';
 
-// Creating and inserting elements
-// .insertAdjacentHTML(position, text);
+  // Create user info object
+  const accountBasics = {
+    owner: `${firstName} ${lastName}`,
+    pin: Number(pin),
+  };
 
-const message = document.createElement('div');
-message.classList.add('cookie-message');
-// message.textContent =
-//   'We use cookies for improved functionality and analytics.';
-message.innerHTML =
-  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
-// header.prepend(message);
-header.append(message);
-// header.append(message.cloneNode(true));
-// header.before(message)
-// header.after(message)
+  // Utilize local storage to pass account info to app.js
+  // COULD ADD LOOP TO SEE IF ACCOUNT ALREADY STORED AND CONTINUE
+  // TO LOOP UNTIL NAME DOESNT EXIST IN LOCAL STORAGE
+  localStorage.setItem('NewAccountInfo', JSON.stringify(accountBasics));
 
-// Delete elements
-document
-  .querySelector('.btn--close-cookie')
-  .addEventListener('click', function () {
-    message.remove();
-    // message.parentElement.removeChild(message);
-  });
-
-// Styles, attributes, and classes
-message.style.backgroundColor = '#37383d';
-message.style.width = '120%';
-
-// Can only access inline styles this way
-console.log(message.style.width);
-
-// But there is a workaround:
-console.log(getComputedStyle(message).color);
-
-// And you can use this to adjust properties:
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
-
-// CSS variables can be changed in JS:
-// document.documentElement.style.setProperty('--color-primary', 'orangered');
-
-// HTML attributes can also be retrieved and set
-const logo = document.querySelector('.nav__logo');
-console.log(logo.alt);
-console.log(logo.src);
-console.log(logo.className);
-
-logo.alt = 'Beautiful minimalist logo';
-
-// Non-standard:
-console.log(logo.designer);
-console.log(logo.getAttribute('designer'));
-logo.setAttribute('company', 'Bankist');
-
-// Note that this returns the relative path instead of absolute (vs logo.src)
-console.log(logo.getAttribute('src'));
-
-// Data attributes
-console.log(logo.dataset.versionNumber);
-
-// Classes
-logo.classList.add('c');
-logo.classList.remove('c');
-logo.classList.toggle('c');
-logo.classList.contains('c');
-
-// Don't use this (it overwrites all other classes):
-logo.className = 'jonas';
-
-
-const h1 = document.querySelector('h1');
-
-const alertH1 = function (e) {
-  alert('addEventListener: You are reading the heading!');
-  h1.removeEventListener('mouseenter', alertH1);
-};
-
-h1.addEventListener('mouseenter', alertH1);
-
-// Old school way of doing this, addEventListener() is more modern
-// h1.onmouseenter = function (e) {
-//   console.log('WOW!!');
-// };
-
-// Event bubbling
-
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
-const randomColor = () =>
-  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
-
-console.log(randomColor());
-
-document.querySelector('.nav__link').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-
-  // e.stopPropagation();
+  // Redirect to app.html
+  window.location.href = './app/app.html';
 });
-
-document.querySelector('.nav__links').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-});
-
-document.querySelector('.nav').addEventListener(
-  'click',
-  function (e) {
-    this.style.backgroundColor = randomColor();
-  },
-  true
-);
-*/
-
-///////////////////////
-// Traversing the DOM
-/*
-const h1 = document.querySelector('h1');
-
-// Going downwards: child
-console.log(h1.querySelectorAll('.highlight'));
-console.log(h1.childNodes);
-console.log(h1.children);
-h1.firstElementChild.style.color = 'white';
-h1.lastElementChild.style.color = 'orangered';
-
-// Going upwards: parents
-console.log(h1.parentNode);
-console.log(h1.parentElement);
-
-h1.closest('.header').style.background = 'var(--gradient-secondary)';
-h1.closest('h1').style.background = 'var(--gradient-primary)';
-
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
-console.log(h1.previousSibling);
-console.log(h1.parentElement.children);
-[...h1.parentElement.children].forEach(function (el) {
-  if (el !== h1) el.style.transform = 'scale(0.5)';
-});
-
-document.addEventListener('DOMContentLoaded', function (e) {
-  console.log('HTML parsed and DOM tree built');
-});
-
-window.addEventListener('load', function (e) {
-  console.log('Page fully loaded');
-});
-
-// window.addEventListener('beforeunload', function (e) {
-//   e.preventDefault();
-//   console.log('Are you sure you want to leave?');
-//   e.returnValue = '';
-// });
-*/
